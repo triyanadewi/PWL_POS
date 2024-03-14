@@ -25,6 +25,5 @@
         <input type="number" name="level_id" placeholder="Masukkan ID Level">
         <br><br>
         <input type="submit" class="btn btn-success" value="Simpan">
-
 </body>
 </html>
