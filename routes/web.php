@@ -3,6 +3,7 @@
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\UserController;
+use App\Models\KategoriModel;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,3 +32,6 @@ Route::get('/user/hapus/{id}', [UserController::class, 'hapus']);
 Route::get('/kategori', [KategoriController::class, 'index']);
 Route::get('/kategori/create', [KategoriController::class, 'create']);
 Route::post('/kategori', [KategoriController::class, 'store']);
+Route::get('/kategori/edit/{id}', [KategoriController::class, 'edit']);
+Route::put('/kategori/edit_save/{id}', [KategoriController::class, 'edit_save']);
+Route::get('/kategori/delete/{id}', [KategoriController::class, 'delete']);
