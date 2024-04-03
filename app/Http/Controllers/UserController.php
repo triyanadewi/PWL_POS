@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\KategoriDataTable;
 use App\Models\UserModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\DataTables\UserDataTable;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(UserDataTable $dataTable)
     {
         // tambah data user dengan Eloquent Model
         /*$data = [
@@ -166,8 +168,10 @@ class UserController extends Controller
         /*$user = UserModel::with('level')->get();
         dd($user);*/
 
-        $user = UserModel::with('level')->get();
-        return view('user', ['data' => $user]);
+        // $user = UserModel::with('level')->get();
+        // return view('user', ['data' => $user]);
+
+        return $dataTable->render('user.index');
     }
 
     public function tambah()

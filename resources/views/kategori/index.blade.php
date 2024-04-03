@@ -3,7 +3,7 @@
 {{-- Customize layout sections --}}
 
 @section('subtitle', 'Kategori')
-@section('content_header_title', 'Home')
+@section('content_header_title', 'Manage')
 @section('content_header_subtitle', 'Kategori')
 
 @section('content')

@@ -1,29 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tambah User</title>
-</head>
-<body>
-    <h1>Form Tambah Data User</h1>
+@extends('layouts.app')
+{{-- Customize layout sections --}}
+@section('subtitle', 'User')
+@section('content_header_title', 'User')
+@section('content_header_subtitle', 'Create')
+{{-- Content body: main page content --}}
+@section('content')
+<div class="container">
+  <!-- general form elements disabled -->
+    <div class="card card-warning">
+    <div class="card-header">
+        <h3 class="card-title">Tambah User Baru</h3>
+    </div>
+    <!-- /.card-header -->
+
     <form method="post" action="/user/tambah_simpan">
 
         {{ csrf_field() }}
 
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Masukkan Username">
-        <br>
-        <label>Nama</label>
-        <input type="text" name="nama" placeholder="Masukkan Nama">
-        <br>
-        <label>Password</label>
-        <input type="password" name="password" placeholder="Masukkan Password">
-        <br>
-        <label>Level ID</label>
-        <input type="number" name="level_id" placeholder="Masukkan ID Level">
-        <br><br>
-        <input type="submit" class="btn btn-success" value="Simpan">
-</body>
-</html>
+        <div class="card-body">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Masukkan Username">
+            </div>
+            <div class="form-group">
+                <label for="nama">Nama</label>
+                <input type="text" class="form-control" id="nama" name="nama" placeholder="Masukkan Nama">
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password">
+            </div>
+            <div class="form-group">
+              <label for="level">Level ID</label>
+              <input type="number" class="form-control" id="level_id" name="level_id" placeholder="Masukkan Level ID">
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-primary">Submit</button>
+            <a href="/user" class="btn btn-danger">Cancel</a>
+        </div>
+      </form>    
+    <!-- /.card-body -->
+    </div>
+</div>
+@endsection
