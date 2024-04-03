@@ -13,7 +13,7 @@
     </div>
     <!-- /.card-header -->
 
-    <form method="post" action="/level/store">
+    <form method="post" action="/level">
 
         {{ csrf_field() }}
 
