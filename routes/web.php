@@ -4,6 +4,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\WelcomeController;
 use App\Models\KategoriModel;
 use Illuminate\Support\Facades\Route;
 
@@ -44,3 +45,6 @@ Route::put('/level/edit_save/{id}', [LevelController::class, 'edit_save']);
 Route::get('/level/delete/{id}', [LevelController::class, 'delete']);
 // POSController
 Route::resource('m_user', POSController::class);
+
+// Penerapan Layouting
+Route::get('/', [WelcomeController::class,'index']);
