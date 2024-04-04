@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\POSController;
 use App\Http\Controllers\UserController;
 use App\Models\KategoriModel;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +42,5 @@ Route::post('/level', [LevelController::class, 'store']);
 Route::get('/level/edit/{id}', [LevelController::class, 'edit']);
 Route::put('/level/edit_save/{id}', [LevelController::class, 'edit_save']);
 Route::get('/level/delete/{id}', [LevelController::class, 'delete']);
+// POSController
+Route::resource('m_user', POSController::class);
