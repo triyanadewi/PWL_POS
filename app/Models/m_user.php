@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class m_user extends Model
 {
@@ -20,10 +20,4 @@ class m_user extends Model
         'nama',
         'password',
     ];
-
-    public function level(): HasMany
-    {
-        return $this->hasMany(LevelModel::class, 'level_id', 'level_id');
-    }
-
 }
