@@ -1,23 +1,80 @@
-@extends('layouts.app')
-
-{{-- Customize layout sections --}}
-
-@section('subtitle', 'Kategori')
-@section('content_header_title', 'Manage')
-@section('content_header_subtitle', 'Kategori')
+@extends('layouts.template')
 
 @section('content')
-    <div class="container">
-        <div class="card">
-            <div class="card-header">Manage Kategori</div>
-            <div class="card-body">
-                <a href="/kategori/create" class="btn btn-primary mb-3"><i class="fas fa-fw fa-plus"></i> Add</a>
-                {{ $dataTable->table() }}
-            </div>
+<div class="card card-outline card-primary">
+    <div class="card-header">
+        <h3 class="card-title">{{ $page->title }}</h3>
+        <div class="card-tools">
+            <a class="btn btn-sm btn-primary mt-1" href="{{ url('kategori/create') }}">Tambah</a>
         </div>
     </div>
+    <div class="card-body">
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success')}}</div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        <table class="table table-bordered table-striped table-hover table-sm" id="table_kategori">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Kode Kategori</th>
+                    <th>Nama Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</div>
 @endsection
+@push('css')
+@endpush
 
-@push('scripts')
-    {{ $dataTable->scripts() }}
+@push('js')
+<script>
+    $(document).ready(function () {
+        var datakategori = $('#table_kategori').DataTable({
+            serverSide: true,  // serverSide: true, Jika ingin menggunakan server side processing
+            ajax: {
+                "url": "{{ url('kategori/list') }}",
+                "dataType": "json",
+                "type": "POST",
+                "data": function (d) {
+                    d.kategori_id = $('#kategori_id').val();
+                }
+            },
+            columns: [{
+                    data: "DT_RowIndex", // nomor urut dari laravel datatable addIndexColumn()
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data: "kategori_kode",
+                    className: "",
+                    orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan
+                    searchable: true    // searchable: true, jika ingin kolom ini bisa dicari
+                },
+                {
+                    data: "kategori_nama",
+                    className: "",
+                    orderable: true,    // orderable: true, jika ingin kolom ini bisa diurutkan
+                    searchable: true    // searchable: true, jika ingin kolom ini bisa dicari
+                },
+                {
+                    data: "aksi",
+                    className: "",
+                    orderable: false,   // orderable: true, jika ingin kolom ini bisa diurutkan
+                    searchable: false   // searchable: true, jika ingin kolom ini bisa dicari
+                }
+            ]
+        });
+
+        $('#kategori_id').on('change', function() {
+            datakategori.ajax.reload();
+        });
+        
+    });
+</script>
 @endpush
