@@ -11,7 +11,7 @@ class RegisterController extends Controller
 {
     public function __invoke(Request $request)
     {
-        // Set validasi
+        // Set validation
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'nama' => 'required',

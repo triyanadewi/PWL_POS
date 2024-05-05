@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\LevelController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\KategoriController;
 use App\Http\Controllers\Api\BarangController;
+use App\Http\Controllers\Api\TransaksiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,6 @@ Route::put('item/{barang}', [BarangController::class, 'update']);
 Route::delete('item/{barang}', [BarangController::class, 'destroy']);
 
 Route::post('/register1', App\Http\Controllers\Api\RegisterController::class)->name('register1');
+Route::post('/item1', App\Http\Controllers\Api\BarangController::class)->name('barang');
+Route::post('/transaksi', App\Http\Controllers\Api\TransaksiController::class)->name('transaksi');
+Route::get('transaksi/{penjualan}', [TransaksiController::class, 'show']);
