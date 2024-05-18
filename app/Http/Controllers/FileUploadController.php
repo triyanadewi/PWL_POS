@@ -32,7 +32,10 @@ class FileUploadController extends Controller
         // }
 
         $request->validate([
-            'berkas'=>'required|file|image|max:5000']);
-            echo $request->berkas->getClientOriginalName()."lolos validasi";
+            'berkas'=>'required|file|image|max:500']);
+            $extfile = $request->berkas->getClientOriginalName();
+            $namaFile = 'web-' . time() . "." . $extfile;
+            $path = $request->berkas->storeAs('uploads', $namaFile);
+            echo "proses upload berhasil, data disimpan pada : $path";
     }
 }
