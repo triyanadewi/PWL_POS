@@ -116,5 +116,9 @@ Route::group(['middleware' => ['auth']], function() {
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/file-upload',[FileUploadController::class,'fileupload']);
+Route::get('/file-upload',[FileUploadController::class,'fileUpload']);
 Route::post('/file-upload',[FileUploadController::class,'prosesFileUpload']);
+
+// Tugas 1
+Route::get('/file-upload-rename',[FileUploadController::class,'fileUploadRename']);
+Route::post('/file-upload-rename',[FileUploadController::class,'prosesFileUploadRename']);
