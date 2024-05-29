@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
         @if (session('success'))
-            <div class="alert alert-success">{{ session('success')}}</div>
+            <div class="alert alert-success">{{ session('success') }}</div>
         @endif
         @if (session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
@@ -35,6 +35,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Foto</th>
                     <th>Username</th>
                     <th>Nama</th>
                     <th>Level Pengguna</th>
@@ -45,6 +46,7 @@
     </div>
 </div>
 @endsection
+
 @push('css')
 @endpush
 
@@ -66,6 +68,16 @@
                     className: "text-center",
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data: "image",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data, type, row) {
+                        var imageUrl = data ? data : '/gambar/User.jpg';
+                        return '<img src="' + imageUrl + '" alt="Image" class="img-thumbnail" width="100">';
+                    }
                 },
                 {
                     data: "username",

@@ -35,6 +35,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Gambar</th>
                     <th>Kode Barang</th>
                     <th>Nama Barang</th>
                     <th>Kategori</th>
@@ -68,6 +69,16 @@
                     className: "text-center",
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data: "image",
+                    className: "text-center",
+                    orderable: false,
+                    searchable: false,
+                    render: function(data,type, row) {
+                        var imageUrl = data ? data : '/gambar/Barang.jpg';
+                        return '<img src="' + imageUrl + '" alt="Image" class="img-thumbnail" width="100">';
+                    }
                 },
                 {
                     data: "barang_kode",

@@ -7,14 +7,14 @@
         <div class="card-tools"></div>
     </div>
     <div class="card-body">
-        <form method="POST" action="{{ url('user') }}" class="form-horizontal">
+        <form method="POST" action="{{ url('user') }}" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             <div class="form-group row">
                 <label class="col-1 control-label col-form-label">Level</label>
                 <div class="col-11">
                     <select class="form-control" id="level_id" name="level_id" required>
                         <option value="">- Pilih Level -</option>
-                            @foreach($level as $item)
+                        @foreach($level as $item)
                         <option value="{{ $item->level_id }}">{{ $item->level_nama }}</option>
                         @endforeach
                     </select>
@@ -51,6 +51,18 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-1 control-label col-form-label">Foto Profil</label>
+                <div class="col-11">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="image" name="image" required>
+                        <label class="custom-file-label" for="image">Choose file</label>
+                    </div>
+                    @error('image')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                    @enderror
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-1 control-label col-form-label"></label>
                 <div class="col-11">
                     <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
@@ -66,4 +78,13 @@
 @endpush
 
 @push('js')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('image').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            var nextSibling = this.nextElementSibling;
+            nextSibling.innerText = fileName;
+        });
+    });
+</script>
 @endpush

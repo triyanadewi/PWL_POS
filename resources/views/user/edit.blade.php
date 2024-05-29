@@ -14,7 +14,10 @@
         </div>
         <a href="{{ url('user') }}" class="btn btn-sm btn-default mt-2">Kembali</a>
         @else
-        <form method="POST" action="{{ url('/user/'.$user->user_id) }}" class="form-horizontal">
+        <div class="text-center mb-3">
+            <img src="{{ asset($user->image) }}" alt="Foto Profil" style="max-width: 200px;">
+        </div>
+        <form method="POST" action="{{ url('/user/'. $user->user_id) }}" class="form-horizontal" enctype="multipart/form-data">
             @csrf
             @method('PUT') <!-- tambahkan baris ini untuk proses edit yang membutuhkan method PUT -->
             <div class="form-group row">
@@ -61,6 +64,22 @@
                 </div>
             </div>
             <div class="form-group row">
+                <label class="col-1 control-label col-form-label">Foto Profil</label>
+                <div class="col-11">
+                    <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="image" name="image" onchange="updateFileName()">
+                        <label class="custom-file-label" for="image" id="file-name">
+                            {{ old('image', $user->image) ? basename($user->image) : 'No file chosen' }}
+                        </label>
+                    </div>
+                    @error('image')
+                    <small class="form-text text-danger">{{ $message }}</small>
+                    @else
+                    <small class="form-text text-muted">Abaikan (jangan diisi) jika tidak ingin mengganti foto.</small>
+                    @enderror
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-1 control-label col-form-label"></label>
                 <div class="col-11">
                     <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
@@ -77,4 +96,11 @@
 @endpush
 
 @push('js')
+<script>
+    function updateFileName() {
+        const fileInput = document.getElementById('image');
+        const fileName = fileInput.files.length > 0 ? fileInput.files[0].name : 'No file chosen';
+        document.getElementById('file-name').innerText = fileName;
+    }
+</script>
 @endpush

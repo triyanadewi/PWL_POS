@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\BarangModel;
 use App\Models\KategoriModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\Facades\DataTables;
 
 class BarangController extends Controller
@@ -31,7 +32,7 @@ class BarangController extends Controller
     // Ambil Data Barang dalam bentuk json untuk datatables
     public function list(Request $request)
     {
-        $barangs = BarangModel::select('barang_id', 'kategori_id','barang_kode', 'barang_nama', 'harga_beli','harga_jual')
+        $barangs = BarangModel::select('barang_id', 'kategori_id','barang_kode', 'barang_nama', 'harga_beli','harga_jual', 'image')
             ->with('kategori');
 
         // Filter data barang berdasarkan kategori kode
@@ -77,15 +78,23 @@ class BarangController extends Controller
             'barang_nama'   => 'required|string|max:100|',
             'kategori_id'   => 'required|integer',
             'harga_beli'    => 'required|integer',
-            'harga_jual'    => 'required|integer'
+            'harga_jual'    => 'required|integer',
+            'image'         => 'required|file|image|max:5000'
         ]);
     
+        $extfile = $request->image->getClientOriginalExtension();
+        $namaFile = $request->barang_kode . '_' . $request->barang_nama . '.' . $extfile;
+        $path = $request->image->move('gambar/barang', $namaFile);
+        $path = str_replace("\\", "//", $path);
+        $pathBaru = asset('gambar/barang/' . $namaFile);
+
         BarangModel::create([
             'barang_kode'   => $request->barang_kode,
             'barang_nama'   => $request->barang_nama,
             'kategori_id'   => $request->kategori_id,
             'harga_beli'    => $request->harga_beli,
-            'harga_jual'    => $request->harga_jual
+            'harga_jual'    => $request->harga_jual,
+            'image'         => $pathBaru
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil disimpan');
@@ -138,15 +147,29 @@ class BarangController extends Controller
             'barang_nama'   => 'required|string|max:100|',
             'kategori_id'   => 'required|integer',
             'harga_beli'    => 'required|integer',
-            'harga_jual'    => 'required|integer'
+            'harga_jual'    => 'required|integer',
+            'image'         => 'nullable|image|max:5000'
         ]);
 
-        BarangModel::find($id)->update([
+        $barang = BarangModel::find($id);
+
+        if ($request->image) {
+            $extfile = $request->image->getClientOriginalExtension();
+            $namaFile = $request->barang_kode . '_' . $request->barang_nama . '.' . $extfile;
+            $path = $request->image->move('gambar/barang', $namaFile);
+            $path = str_replace("\\", "//", $path);
+            $pathBaru = asset('gambar/barang/' . $namaFile);    
+        } else {
+            $pathBaru = $barang->image;
+        }
+
+        $barang->update([
             'barang_kode'   => $request->barang_kode,
             'barang_nama'   => $request->barang_nama,
             'kategori_id'   => $request->kategori_id,
             'harga_beli'    => $request->harga_beli,
-            'harga_jual'    => $request->harga_jual
+            'harga_jual'    => $request->harga_jual,
+            'image'         => $pathBaru
         ]);
 
         return redirect('/barang')->with('success', 'Data barang berhasil diubah');
